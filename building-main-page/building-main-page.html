@@ -3,12 +3,14 @@
         <tr>
             <td style="width: 50%;">
                 <div class="card main-choice margin-right">
-                    <img alt="How do I get a permit for...?" height="93px" src="../SIB/images/building-permits.png" width="93px" />
+                    <img alt="How do I get a permit for...?" src="../SIB/images/building-permits.png" />
                     <a href="http://www.mercergov.org/Page.asp?NavID=2606">How do I get a permit for...?</a>
                 </div>
             </td>
             <td style="width: 50%;">
-                <div class="card main-choice margin-left" href="http://www.mercergov.org/Page.asp?NavID=2610">How do I schedule an inspection?
+                <div class="card main-choice margin-left">
+                    <img alt="How do I get a permit for...?" src="../SIB/images/inspections.png"/>
+                    <a href="http://www.mercergov.org/Page.asp?NavID=2606">How do I schedule an inspection?</a>
                 </div>
             </td>
         </tr>
@@ -78,7 +80,8 @@
         height: 3em;
         font-family: Helvetica;
         margin-bottom: 2em;
-        border: collapse;
+        border-collapse: collapse;
+        border: 0px solid black;
     }
 
     .card {
@@ -92,7 +95,7 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
         cursor: pointer;
-        
+        height: 2.75em;
     }
 
     .card:hover {
@@ -122,5 +125,11 @@
         display: block;
         color: black;
         height: 100%;
+    }
+    
+    .card img {
+        margin-right: 1em;
+        width: 2.5em;
+        height: 2.5em;
     }
 </style>
