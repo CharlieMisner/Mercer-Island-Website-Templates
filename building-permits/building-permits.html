@@ -1,60 +1,258 @@
-<h3>When is a Building Permit Required?</h3>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
 
-<ul>
-	<li><a href="https://mybuildingpermit.com/sites/default/files/documentation/Tip%20Sheet%200%20Permits%20Required_0.pdf"><span style="color: rgb(0, 0, 255);"><u>Highlights of common permit requirements</u></span></a></li>
-	<li><a href="http://www.mercergov.org/files/SECTION 105.pdf" target="_blank"><span style="color: rgb(0, 0, 255);"><u>Detailed permit requirements (within Municipal Code)</u></span></a></li>
-</ul>
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 
-<h3>Permit Forms</h3>
+<div ng-app="permitApp" ng-controller="permitCtrl as ctrl">
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=675"><span style="color: rgb(0, 0, 255);"><u>Click here</u></span></a>&nbsp;to download application forms for both Commercial and Residential&nbsp;projects</li>
-</ul>
+    <md-input-container id="occupancy-select">
+      <label>Occupancy Type</label>
+      <md-select ng-model="ctrl.occupancyType" >
+        <md-option value="Single Family Residence">Single Family Residence</md-option>
+        <md-option value="Commercial or Multi-family">Commercial or Multi-family</md-option>
+      </md-select>
+    </md-input-container>
+    <div ng-if="ctrl.occupancyType === 'Single Family Residence'" class="constructionTypeContainer">
+        <h1>Select a Construction Type:</h1>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/new-sfr.png"/>
+                    <span>New Residence</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/addition.png"/>
+                    <span>Addition </span>
+                </a>
+            </div>
+        </div>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a >
+                    <img alt="How do I get a permit for...?" src="../SIB/images/deck.png"/>
+                    <span>Deck</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/interior-remodel.png"/>
+                    <span>Interior Remodel</span>
+                </a>
+            </div>
+        </div>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a >
+                    <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
+                    <span>Demolition</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/mech-elec-plumb.png"/>
+                    <span>Mech., Elec., Plumbing</span>
+                </a>
+            </div>
+        </div>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a >
+                    <img alt="How do I get a permit for...?" src="../SIB/images/reroof.png"/>
+                    <span>Re-roof</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/solar.png"/>
+                    <span>Solar Panels</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ctrl.occupancyType === 'Commercial or Multi-family'" class="constructionTypeContainer">
+        <h1>Select a Construction Type:</h1>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/new-commercial.png"/>
+                    <span>New Building</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/new-commercial.png"/>
+                    <span>Tenant Improvements </span>
+                </a>
+            </div>
+        </div>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a >
+                    <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
+                    <span>Demolition</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/mech-elec-plumb.png"/>
+                    <span>Mech., Elec., Plumbing</span>
+                </a>
+            </div>
+        </div>
+        <div class="first-container">
+            <div class="card margin-left flex2 icon-card">
+                <a>
+                    <img alt="How do I get a permit for...?" src="../SIB/images/solar-commercial.png"/>
+                    <span>Solar Panels</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</div>
 
-<h3><strong>Impact Fees</strong></h3>
+<script>
+    var app = angular.module('permitApp', ['ngMaterial', 'ngMessages']);
+    app.controller('permitCtrl', function($scope) {
+        this.occupancyType = "None";
+    });
+</script>
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=3091">Click here</a> to learn more about impact fees</li>
-</ul>
 
-<h3>Getting Your Building Permit</h3>
+<style type="text/css">
+    .HeadLineText {
+        color: #0068B4;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-family: verdana;
+        font-size: 2.5em;
+    }
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2621"><span style="color: rgb(0, 0, 255);"><u>What type do you need?</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2617"><span style="color: rgb(0, 0, 255);"><u>Online permitting</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2620"><span style="color: rgb(0, 0, 255);"><u>Express versus normal routing</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2621"><span style="color: rgb(0, 0, 255);"><u>Simple "Over-the-Counter" permits versus Routed Permits</u></span></a></li>
-</ul>
+    h1 {
+        color: #0068B4;
+        font-family: verdana;
+        font-weight: normal;
+        font-size: 1.5em;
+    }
 
-<h3>MyBuildingPermit.com</h3>
+    p {
+        font-family: verdana;
+        font-weight: normal;
+    }
+    
+    .constructionTypeContainer {
+        margin: 0 10% 0 10%;
+        width: 80%;
+    }
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2617"><span style="color: rgb(0, 0, 255);"><u>What is MyBuildingPermit.com?</u></span></a></li>
-	<li><a href="https://epermit.mybuildingpermit.com/CustomerLogin.aspx" target="_blank"><span style="color: rgb(0, 0, 255);"><u>Getting on-line permit issuance</u></span></a></li>
-	<li><a href="https://permitsearch.mybuildingpermit.com/" target="_blank"><span style="color: rgb(0, 0, 255);"><u>Checking permit status and history on-line</u></span></a></li>
-	<li><a href="https://inspection.mybuildingpermit.com/" target="_blank"><span style="color: rgb(0, 0, 255);"><u>Requesting inspections on-line</u></span></a></li>
-</ul>
+    .first-container {
+        width: 100%;
+        font-family: verdana;
+        font-size: 2em;
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+    }
 
-<h3>Code Information</h3>
+    .second-container {
+        width: 100%;
+        font-family: verdana;
+        font-size: 1.5em;
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+    }
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2615"><span style="color: rgb(0, 0, 255);"><u>Codes, Design Criteria, &amp; Researc</u></span><u><span style="color: rgb(0, 0, 255);">h</span></u></a></li>
-	<li><a href="http://www.codepublishing.com/wa/mercerisland/html/MercerIsland17/MercerIsland17.html"><span style="color: rgb(0, 0, 255);"><u>Mercer Island's&nbsp;Construction Codes</u></span></a></li>
-	<li><a href="http://www.mercergov.org/files/WetSeasonGradingRestrictionWaiverPacket.pdf"><span style="color: rgb(0, 0, 255);"><u>Wet season grading restrictions</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2647"><span style="color: rgb(0, 0, 255);"><u>Design criteria (snow loads, wind exposure/speeds/Kzt, etc)</u></span></a></li>
-</ul>
+    .card {
+        background: #fff;
+        border-radius: 2px;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+        cursor: pointer;
+        height: 4.5em;
+    }
 
-<h3>Plan Review Information&nbsp;</h3>
+    .icon-card {
+        height: 4.5em;
+    }
 
-<ul>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2618"><span style="color: rgb(0, 0, 255);"><u>When plan&nbsp;review is required and the plan review process</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2619"><span style="color: rgb(255, 0, 0);"><u>Electronic Plan Review on the Cloud (MIePlan)</u></span></a></li>
-	<li><a href="http://www.mercergov.org/Page.asp?NavID=2620"><span style="color: rgb(0, 0, 255);"><u>Plan review target times</u></span></a></li>
-</ul>
+    .centered-card {
+        height: 3.5em;
+        font-family: verdana;
+    }
 
-<p>&nbsp;</p>
+    .card:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    }
 
-<p>Also see links for <a href="http://mercerisland.dev.projecta.com/Page.asp?NavID=361"><span style="color: rgb(0, 0, 255);"><u>Land Use Permits</u></span></a>, <a href="http://mercerisland.dev.projecta.com/Page.asp?NavID=2622"><span style="color: rgb(0, 0, 255);"><u>Utilities/Right of Way Permits</u></span></a>, <a href="http://mercerisland.dev.projecta.com/page.asp?NavID=2636"><span style="color: rgb(0, 0, 255);"><u>Tree Permits</u></span></a>, &amp;<span style="color: rgb(0, 0, 255);"> </span><a href="http://mercerisland.dev.projecta.com/page.asp?NavID=2614"><span style="color: rgb(0, 0, 255);"><u>Fire </u></span><u><span style="color: rgb(0, 0, 255);">Permits</span></u></a><br />
-<br />
-<br />
-How are we doing? (<a href="http://mercerisland.dev.projecta.com/FormPage.asp?FormID=45"><span style="color: rgb(0, 0, 255);"><u>Click here</u></span></a><span style="color: rgb(0, 0, 255);">&nbsp;</span>for customer survey)</p>
+    .flex2 {
+        flex-basis: calc(50% - 0.5em);
+    }
+
+    .flex3 {
+        flex-basis: calc(33.3% - 0.5em);
+    }
+
+    .margin-left {
+        margin-left: 0.5em;
+    }
+
+    .margin-right {
+        margin-right: 0.5em;
+    }
+
+    .margin-both {
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+
+    .card a {
+        height: 100%;
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    span {
+        display: inline;
+        text-decoration: none;
+        color: black;
+        flex-shrink: 1;
+    }
+
+    .card img {
+        display: block;
+        margin: 1em;
+        width: 3em;
+        height: 3em;
+        flex-shrink: 0;
+    }
+
+    .center-text {
+        width: 100%;
+        text-align: center;
+    }
+    
+    #occupancy-select {
+        margin-left: 10%;
+    }
+</style>
