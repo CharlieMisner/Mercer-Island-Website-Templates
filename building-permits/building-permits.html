@@ -150,19 +150,15 @@
         </div>
         <div>
             <h1>Required Forms:</h1>
-
-                <div ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
-                    {{form.name}}
-                </div>
-
+            <div ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
+                {{form.name}}
+            </div>
         </div>
         <div>
             <h1>Helpful Information:</h1>
-
-                <div ng-repeat="info in ctrl.types[ctrl.constructionType].helpfulInformation">
-                    {{info.name}}
-                </div>
-
+            <div ng-repeat="info in ctrl.types[ctrl.constructionType].helpfulInformation">
+                {{info.name}}
+            </div>
         </div>
         <div class="centered-button">
             <md-button ng-click="ctrl.setView(ctrl.occupancy)" class="md-raised md-primary">BACK TO {{ctrl.occupancy | uppercase}}</md-button>
@@ -230,12 +226,12 @@
                     'Studies'
                 ],
                 forms: [
-                    { name: 'Fire Area Worksheet', url: '', size: '8.5"x11"'},
+                    { name: 'Fire Area Worksheet', url: '', size: '8.5"x11"' },
                     { name: 'Application', url: '' },
-                    { name: 'Cover Sheet', url: '', size: 'Size should match drawings'}
+                    { name: 'Cover Sheet', url: '', size: 'Size should match drawings' }
                 ],
                 helpfulInformation: [
-                    { name: 'Helpful Thing', url: '', type: 'pdf'}
+                    { name: 'Helpful Thing', url: '', type: 'pdf' }
                 ]
             }
         }
