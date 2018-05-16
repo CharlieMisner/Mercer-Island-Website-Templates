@@ -9,18 +9,28 @@
 
 <div ng-app="permitApp" ng-controller="permitCtrl as ctrl">
 
-    <md-input-container id="occupancy-select">
-      <label>Occupancy Type</label>
-      <md-select ng-model="ctrl.occupancyType" >
-        <md-option value="Single Family Residence">Single Family Residence</md-option>
-        <md-option value="Commercial or Multi-family">Commercial or Multi-family</md-option>
-      </md-select>
-    </md-input-container>
-    <div ng-if="ctrl.occupancyType === 'Single Family Residence'" class="constructionTypeContainer">
-        <h1>Select a Construction Type:</h1>
+    <div ng-if="ctrl.view === 'occupancy'" class="constructionTypeContainer">
+        <h1>Select an Occupancy Type:</h1>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setView('singleFamily')">
+                    <img alt="How do I get a permit for...?" src="../SIB/images/new-sfr.png"/>
+                    <span>Single Family</span>
+                </a>
+            </div>
+            <div class="card margin-left flex2 icon-card">
+                <a ng-click="ctrl.setView('commercial')">
+                    <img alt="How do I get a permit for...?" src="../SIB/images/new-commercial.png"/>
+                    <span>Multi-Family or Commercial</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ctrl.view === 'singleFamily'" class="constructionTypeContainer">
+        <h1>Select a Single Family Construction Type:</h1>
+        <div class="first-container">
+            <div class="card margin-right flex2 icon-card">
+                <a ng-click="ctrl.setConstructionType('SFnew')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/new-sfr.png"/>
                     <span>New Residence</span>
                 </a>
@@ -34,7 +44,7 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a >
+                <a>
                     <img alt="How do I get a permit for...?" src="../SIB/images/deck.png"/>
                     <span>Deck</span>
                 </a>
@@ -48,7 +58,7 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a >
+                <a>
                     <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
                     <span>Demolition</span>
                 </a>
@@ -62,7 +72,7 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a >
+                <a>
                     <img alt="How do I get a permit for...?" src="../SIB/images/reroof.png"/>
                     <span>Re-roof</span>
                 </a>
@@ -74,9 +84,12 @@
                 </a>
             </div>
         </div>
+        <div class="centered-button">
+            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE</md-button>
+        </div>
     </div>
-    <div ng-if="ctrl.occupancyType === 'Commercial or Multi-family'" class="constructionTypeContainer">
-        <h1>Select a Construction Type:</h1>
+    <div ng-if="ctrl.view === 'commercial'" class="constructionTypeContainer">
+        <h1>Select a Multi-Family or Commercial Construction Type:</h1>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
                 <a>
@@ -93,7 +106,7 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a >
+                <a>
                     <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
                     <span>Demolition</span>
                 </a>
@@ -106,21 +119,126 @@
             </div>
         </div>
         <div class="first-container">
-            <div class="card margin-left flex2 icon-card">
+            <div class="card margin-right flex2 icon-card">
                 <a>
                     <img alt="How do I get a permit for...?" src="../SIB/images/solar-commercial.png"/>
                     <span>Solar Panels</span>
                 </a>
             </div>
         </div>
+        <div class="centered-button">
+            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE</md-button>
+        </div>
     </div>
-    
+    <div ng-if="ctrl.view === 'typeView'" class="constructionTypeContainer">
+        <h1>{{ctrl.types[ctrl.constructionType].title}}</h1>
+        <div>
+            <h1>Steps To Obtain Permit:</h1>
+            <ol>
+                <li ng-repeat="step in ctrl.types[ctrl.constructionType].steps">
+                    {{step}}
+                </li>
+            </ol>
+        </div>
+        <div>
+            <h1>Submittal Requirements:</h1>
+            <ul>
+                <li ng-repeat="requirement in ctrl.types[ctrl.constructionType].submittalRequirements">
+                    {{requirement}}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h1>Required Forms:</h1>
+
+                <div ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
+                    {{form.name}}
+                </div>
+
+        </div>
+        <div>
+            <h1>Helpful Information:</h1>
+
+                <div ng-repeat="info in ctrl.types[ctrl.constructionType].helpfulInformation">
+                    {{info.name}}
+                </div>
+
+        </div>
+        <div class="centered-button">
+            <md-button ng-click="ctrl.setView(ctrl.occupancy)" class="md-raised md-primary">BACK TO {{ctrl.occupancy | uppercase}}</md-button>
+        </div>
+    </div>
+
 </div>
 
 <script>
     var app = angular.module('permitApp', ['ngMaterial', 'ngMessages']);
+    app.config(function($mdThemingProvider) {
+        $mdThemingProvider.definePalette('mercerIsland', {
+            '50': '0068B4',
+            '100': '0068B4',
+            '200': '0068B4',
+            '300': '0068B4',
+            '400': '0068B4',
+            '500': '0068B4',
+            '600': '0068B4',
+            '700': '0068B4',
+            '800': '0068B4',
+            '900': '0068B4',
+            'A100': '0068B4',
+            'A200': '0068B4',
+            'A400': '0068B4',
+            'A700': '0068B4',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': ['50', '100',
+                '200', '300', '400', 'A100'
+            ],
+            'contrastLightColors': undefined
+        });
+        $mdThemingProvider.theme('default')
+            .primaryPalette('mercerIsland')
+    });
+
     app.controller('permitCtrl', function($scope) {
-        this.occupancyType = "None";
+        this.view = "occupancy";
+        this.occupancy = "singleFamily";
+        this.constructionType = null;
+
+        this.setView = function(view) {
+            this.view = view;
+            if (view === 'singleFamily' || view === 'commercial') {
+                this.occupancy = view;
+            }
+        }
+
+        this.setConstructionType = function(type) {
+            this.constructionType = type;
+            this.setView('typeView');
+        }
+
+        this.types = {
+            'SFnew': {
+                title: 'New Single Family Residence',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Fire Area Worksheet', url: '', size: '8.5"x11"'},
+                    { name: 'Application', url: '' },
+                    { name: 'Cover Sheet', url: '', size: 'Size should match drawings'}
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Thing', url: '', type: 'pdf'}
+                ]
+            }
+        }
     });
 </script>
 
@@ -146,7 +264,7 @@
         font-family: verdana;
         font-weight: normal;
     }
-    
+
     .constructionTypeContainer {
         margin: 0 10% 0 10%;
         width: 80%;
@@ -251,8 +369,15 @@
         width: 100%;
         text-align: center;
     }
-    
+
     #occupancy-select {
         margin-left: 10%;
+    }
+
+    .centered-button {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
     }
 </style>
