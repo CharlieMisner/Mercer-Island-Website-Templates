@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
@@ -85,7 +86,7 @@
             </div>
         </div>
         <div class="centered-button">
-            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE</md-button>
+            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE SELECTION</md-button>
         </div>
     </div>
     <div ng-if="ctrl.view === 'commercial'" class="constructionTypeContainer">
@@ -127,20 +128,20 @@
             </div>
         </div>
         <div class="centered-button">
-            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE</md-button>
+            <md-button ng-click="ctrl.setView('occupancy')" class="md-raised md-primary">BACK TO OCCUPANCY TYPE SELECTION</md-button>
         </div>
     </div>
     <div ng-if="ctrl.view === 'typeView'" class="constructionTypeContainer">
-        <h1>{{ctrl.types[ctrl.constructionType].title}}</h1>
-        <div>
-            <h1>Steps To Obtain Permit:</h1>
+        <h1 class="construction-type">{{ctrl.types[ctrl.constructionType].title}}</h1>
+        <div ng-if="ctrl.types[ctrl.constructionType].steps.length > 0">
+            <h1 class="sub-title">Steps To Obtain Permit:</h1>
             <ol>
                 <li ng-repeat="step in ctrl.types[ctrl.constructionType].steps">
                     {{step}}
                 </li>
             </ol>
         </div>
-        <div>
+        <div ng-if="ctrl.types[ctrl.constructionType].submittalRequirements.length > 0">
             <h1>Submittal Requirements:</h1>
             <ul>
                 <li ng-repeat="requirement in ctrl.types[ctrl.constructionType].submittalRequirements">
@@ -148,20 +149,27 @@
                 </li>
             </ul>
         </div>
-        <div>
+        <div ng-if="ctrl.types[ctrl.constructionType].forms.length > 0">
             <h1>Required Forms:</h1>
-            <div ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
-                {{form.name}}
+            <div class="card small-card" ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
+                <a href="{{form.url}}">
+                    <i class="far fa-file-pdf fa-2x blue-icon"></i>
+                    <span>{{form.name}}</span><span class="page-size">({{form.size}})</span>
+                </a>
             </div>
         </div>
-        <div>
+        <div ng-if="ctrl.types[ctrl.constructionType].helpfulInformation.length > 0">
             <h1>Helpful Information:</h1>
-            <div ng-repeat="info in ctrl.types[ctrl.constructionType].helpfulInformation">
-                {{info.name}}
+            <div class="card small-card blue" ng-repeat="info in ctrl.types[ctrl.constructionType].helpfulInformation">
+                <a href="{{info.url}}">
+                    <i ng-if="info.type === 'link'" class="fas fa-external-link-alt fa-2x blue-icon"></i>
+                    <i ng-if="info.type === 'pdf'" class="far fa-file-pdf fa-2x blue-icon"></i>
+                    <span>{{info.name}}</span>
+                </a>
             </div>
         </div>
         <div class="centered-button">
-            <md-button ng-click="ctrl.setView(ctrl.occupancy)" class="md-raised md-primary">BACK TO {{ctrl.occupancy | uppercase}}</md-button>
+            <md-button ng-click="ctrl.setView(ctrl.occupancy)" class="md-raised md-primary">BACK TO CONSTRUCTION TYPE SELECTION</md-button>
         </div>
     </div>
 
@@ -226,14 +234,149 @@
                     'Studies'
                 ],
                 forms: [
-                    { name: 'Fire Area Worksheet', url: '', size: '8.5"x11"' },
-                    { name: 'Application', url: '' },
-                    { name: 'Cover Sheet', url: '', size: 'Size should match drawings' }
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
                 ],
                 helpfulInformation: [
-                    { name: 'Helpful Thing', url: '', type: 'pdf' }
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
                 ]
-            }
+            },
+            'decks': {
+                title: 'New Deck',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'demo': {
+                title: 'Demolition',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            're-roof': {
+                title: 'Re-roof',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'addition': {
+                title: 'New Single Family Addition or ADU',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'interior-remodel': {
+                title: 'Interior Remodel',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'mech-elec-plumb': {
+                title: 'Mechanical, Electrical, and Plumbing',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            
+            
         }
     });
 </script>
@@ -255,6 +398,20 @@
         font-weight: normal;
         font-size: 1.5em;
     }
+    
+    .construction-type {
+        color: #0068B4;
+        font-family: verdana;
+        font-weight: bold;
+        font-size: 2em;
+    }
+    
+    .sub-title {
+        color: #0068B4;
+        font-family: verdana;
+        font-weight: normal;
+        font-size: 1.5em;
+    }
 
     p {
         font-family: verdana;
@@ -262,8 +419,8 @@
     }
 
     .constructionTypeContainer {
-        margin: 0 10% 0 10%;
-        width: 80%;
+        margin: 0 0% 0 0%;
+        width: 100%;
     }
 
     .first-container {
@@ -309,6 +466,12 @@
     .centered-card {
         height: 3.5em;
         font-family: verdana;
+    }
+    
+    .small-card {
+        width: 30em;
+        margin: 1em;
+        height: 3em;
     }
 
     .card:hover {
@@ -375,5 +538,16 @@
         flex-direction: column;
         align-content: center;
         align-items: center;
+    }
+    
+    .blue-icon {
+        color: #0068B4;
+        margin: 0 0.5em 0 0.5em;    
+        flex-shrink: 0;
+    }
+    
+    .page-size {
+        font-style: italic;
+        margin-left: 0.5em;
     }
 </style>
