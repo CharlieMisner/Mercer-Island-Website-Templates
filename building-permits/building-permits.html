@@ -37,7 +37,7 @@
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('addition')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/addition.png"/>
                     <span>Addition </span>
                 </a>
@@ -45,13 +45,13 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('decks')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/deck.png"/>
                     <span>Deck</span>
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('interior-remodel')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/interior-remodel.png"/>
                     <span>Interior Remodel</span>
                 </a>
@@ -59,13 +59,13 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('demo')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
                     <span>Demolition</span>
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('mech-elec-plumb')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/mech-elec-plumb.png"/>
                     <span>Mech., Elec., Plumbing</span>
                 </a>
@@ -73,13 +73,13 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('re-roof')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/reroof.png"/>
                     <span>Re-roof</span>
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('solar')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/solar.png"/>
                     <span>Solar Panels</span>
                 </a>
@@ -93,13 +93,13 @@
         <h1>Select a Multi-Family or Commercial Construction Type:</h1>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('new-comm')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/new-commercial.png"/>
                     <span>New Building</span>
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('ti-comm')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/new-commercial.png"/>
                     <span>Tenant Improvements </span>
                 </a>
@@ -107,13 +107,13 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('commercial-demo')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/demo.png"/>
                     <span>Demolition</span>
                 </a>
             </div>
             <div class="card margin-left flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('commercial-mech')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/mech-elec-plumb.png"/>
                     <span>Mech., Elec., Plumbing</span>
                 </a>
@@ -121,7 +121,7 @@
         </div>
         <div class="first-container">
             <div class="card margin-right flex2 icon-card">
-                <a>
+                <a ng-click="ctrl.setConstructionType('solar')">
                     <img alt="How do I get a permit for...?" src="../SIB/images/solar-commercial.png"/>
                     <span>Solar Panels</span>
                 </a>
@@ -136,8 +136,10 @@
         <div ng-if="ctrl.types[ctrl.constructionType].steps.length > 0">
             <h1 class="sub-title">Steps To Obtain Permit:</h1>
             <ol>
+                <p ng-include="ctrl.types[ctrl.constructionType].steps[0].description"></p>
                 <li ng-repeat="step in ctrl.types[ctrl.constructionType].steps">
-                    {{step}}
+                    <h3>{{step.title}}</h3>
+                    <p ng-bind-html="step.description | trust"></p>
                 </li>
             </ol>
         </div>
@@ -150,7 +152,7 @@
             </ul>
         </div>
         <div ng-if="ctrl.types[ctrl.constructionType].forms.length > 0">
-            <h1>Required Forms:</h1>
+            <h1>Applicable Forms:</h1>
             <div class="card small-card" ng-repeat="form in ctrl.types[ctrl.constructionType].forms">
                 <a href="{{form.url}}">
                     <i class="far fa-file-pdf fa-2x blue-icon"></i>
@@ -177,33 +179,8 @@
 
 <script>
     var app = angular.module('permitApp', ['ngMaterial', 'ngMessages']);
-    app.config(function($mdThemingProvider) {
-        $mdThemingProvider.definePalette('mercerIsland', {
-            '50': '0068B4',
-            '100': '0068B4',
-            '200': '0068B4',
-            '300': '0068B4',
-            '400': '0068B4',
-            '500': '0068B4',
-            '600': '0068B4',
-            '700': '0068B4',
-            '800': '0068B4',
-            '900': '0068B4',
-            'A100': '0068B4',
-            'A200': '0068B4',
-            'A400': '0068B4',
-            'A700': '0068B4',
-            'contrastDefaultColor': 'light',
-            'contrastDarkColors': ['50', '100',
-                '200', '300', '400', 'A100'
-            ],
-            'contrastLightColors': undefined
-        });
-        $mdThemingProvider.theme('default')
-            .primaryPalette('mercerIsland')
-    });
 
-    app.controller('permitCtrl', function($scope) {
+    app.controller('permitCtrl', ['$sce' , function($sce, $scope) {
         this.view = "occupancy";
         this.occupancy = "singleFamily";
         this.constructionType = null;
@@ -219,14 +196,32 @@
             this.constructionType = type;
             this.setView('typeView');
         }
+        
 
         this.types = {
             'SFnew': {
                 title: 'New Single Family Residence',
                 steps: [
-                    'Do this.',
-                    'Then some of that.',
-                    'And your done!'
+                    {
+                        title:'Pre-Application Meeting',
+                        description: 'A Pre-Application Meeting is required prior to submittal for many land use applications and recommended for others.  A Pre-Application Meeting is an opportunity to meet face to face with Development Services Staff to discuss a proposed land use application. <a href="http://www.mercergov.org/files/PREAPPFORM.pdf">Click here</a> for the Pre-Application meeting request form and more information on whether it is required for your project.' 
+                    },
+                    {
+                        title:'Intake Screening',
+                        description: 'Development Services Staff will screen your building permit application (forms, plans, and submittal documents) for completeness. Intake screenings may be done in-person or electronically.'
+                    },
+                    {
+                        title:'Submit Application Materials',
+                        description: 'this is a description with a <a>link</a>'
+                    },
+                    {
+                        title:'Submit Revisions',
+                        description: 'this is a description with a <a>link</a>'
+                    },
+                    {
+                        title:'Pay Fees and Pick Up Permit Documents',
+                        description: 'this is a description with a <a>link</a>'
+                    }
                 ],
                 submittalRequirements: [
                     'Drawings',
@@ -375,10 +370,124 @@
                     { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
                 ]
             },
-            
-            
+            'new-comm': {
+                title: 'New Commercial or Multi-family Building',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'ti-comm': {
+                title: 'Commercial Tenant Improvements',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'commercial-demo': {
+                title: 'Commercial Demolition',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
+            'commercial-mech': {
+                title: 'Commercial Mechanical, Electrical, and Plumbing',
+                steps: [
+                    'Do this.',
+                    'Then some of that.',
+                    'And your done!'
+                ],
+                submittalRequirements: [
+                    'Drawings',
+                    'Calcs',
+                    'Studies'
+                ],
+                forms: [
+                    { name: 'Application', url: 'http://www.mercergov.org/files/PermitAppBldg2018.pdf', size: '8.5"x11"' },
+                    { name: 'Fire Area Worksheet', url: '../SIB/files/2018%20FireGrossSqFt(1).pdf', size: '8.5"x11"' },
+                    { name: 'Cover Sheet', url: '../SIB/files/DSG%20CVR%202016%2024x36.pdf', size: 'Size should match drawings' }
+                ],
+                helpfulInformation: [
+                    { name: 'Helpful Tip Sheet', url: 'http://www.mercergov.org/files/SubmittalChecklistSFR.pdf', type: 'pdf' },
+                    { name: 'Helpful Link', url: 'https://www.iccsafe.org/', type: 'link' }
+                ]
+            },
         }
+    }]);
+    
+    app.config(function($mdThemingProvider) {
+        $mdThemingProvider.definePalette('mercerIsland', {
+            '50': '0068B4',
+            '100': '0068B4',
+            '200': '0068B4',
+            '300': '0068B4',
+            '400': '0068B4',
+            '500': '0068B4',
+            '600': '0068B4',
+            '700': '0068B4',
+            '800': '0068B4',
+            '900': '0068B4',
+            'A100': '0068B4',
+            'A200': '0068B4',
+            'A400': '0068B4',
+            'A700': '0068B4',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': ['50', '100',
+                '200', '300', '400', 'A100'
+            ],
+            'contrastLightColors': undefined
+        });
+        $mdThemingProvider.theme('default')
+            .primaryPalette('mercerIsland')
     });
+    
+    app.filter('trust', function($sce) { return $sce.trustAsHtml; });
 </script>
 
 
